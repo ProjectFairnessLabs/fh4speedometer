@@ -1,16 +1,17 @@
 --[[ Forza Horizon 4 Speedometer for FiveM ]]--
 --[[ Author: Akkariin | Github: https://github.com/kasuganosoras/fh4speed ]]--
---[[ If you like this script, please give me a like on the fivem forum, thanks ]]--
+--[[ Modified Sources | Github: https://github.com/ProjectFairnessLabs/fh4speedometer ]]--
+--[[ If you like this script, please give Akkariin a like on the Fivem forum, thanks ]]--
 
 local isHide = false
 
 local carRPM, carSpeed, carGear, carIL, carAcceleration, carHandbrake, carBrakeABS, carLS_r, carLS_o, carLS_h
 
-RegisterCommand("fh4speed", function(_, args)	
+RegisterCommand("speedometer", function(_, args)	
 	ToggleDisplay()
 end, false)
 
-RegisterKeyMapping('fh4speed', 'Enable or disable speedometer', 'keyboard', 'f10')
+RegisterKeyMapping('speedometer', 'Enable or disable the speedometer.', 'keyboard', 'f10')
 
 Citizen.CreateThread(function()
 	while true do
