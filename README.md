@@ -1,11 +1,14 @@
 # FH4Speedometer
-Forza Horizon 4 Speedometer for FiveM, modified by The Project Fairness Labs
+Forza Horizon 4 Speedometer for FiveM, modified by The Project Fairness Labs.
 
 [![Screenshots](https://i.imgur.com/Z0DuOkV.png)](https://www.youtube.com/watch?v=e5qshXzDFPA)
 
+# New Features
+- Support for Mosh_Notify
+- Added a new command to switch from KMH to MPH, and vice versa!
+
 ## Video
-- Youtube: https://www.youtube.com/watch?v=e5qshXzDFPA
-- Bilibili: https://www.bilibili.com/video/BV1zK4y1t7y9/
+- Here you go. It's a preview. https://cdn.discordapp.com/attachments/1101164043248603146/1133582784003313694/absolutely_loving_this.mp4
 
 ## Installation
 1. Clone or download this repo
