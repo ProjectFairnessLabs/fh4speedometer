@@ -1,17 +1,27 @@
---[[ Forza Horizon 4 Speedometer for FiveM ]]--
---[[ Author: Akkariin | Github: https://github.com/kasuganosoras/fh4speed ]]--
---[[ Modified Sources | Github: https://github.com/ProjectFairnessLabs/fh4speedometer ]]--
---[[ If you like this script, please give Akkariin a like on the Fivem forum, thanks ]]--
+-- Forza Horizon 4 Speedometer for FiveM
+-- Author: Akkariin | Github: https://github.com/kasuganosoras/fh4speed
+-- Modified Sources | Github: https://github.com/ProjectFairnessLabs/fh4speedometer
+-- If you like this script, please give Akkariin a like on the Fivem forum, thanks
 
 local isHide = false
+local isMetric = true  -- Default to KMH (metric) mode
 
-local carRPM, carSpeed, carGear, carIL, carAcceleration, carHandbrake, carBrakeABS, carLS_r, carLS_o, carLS_h
-
-RegisterCommand("speedometer", function(_, args)	
-	ToggleDisplay()
+RegisterCommand("speedometer", function(_, args)
+	if args[1] == "unit" then
+		isMetric = not isMetric
+		local unit = isMetric and "KMH" or "MPH"
+		TriggerEvent("chatMessage", "SYSTEM", {255, 0, 0}, "The speedometer has switched to " .. unit .."!")
+		TriggerEvent("mosh_notify:notify", "INFO", "<span class=\"text-black\">The speedometer has switched to " .. unit .. "!</span>", "blue", "info", 5000)
+	else
+		ToggleDisplay()
+	end
 end, false)
 
-RegisterKeyMapping('speedometer', 'Enable or disable the speedometer.', 'keyboard', 'f10')
+TriggerEvent('chat:addSuggestion', '/speedometer', 'Toggle the speedometer display.', {
+    { name="unit", help="Switch speedometer units between KMH and MPH." }
+})
+
+RegisterKeyMapping("speedometer", "Enable or disable the speedometer.", "keyboard", "f10")
 
 Citizen.CreateThread(function()
 	while true do
@@ -51,6 +61,9 @@ Citizen.CreateThread(function()
 					carLS_r         = NcarLS_r
 					carLS_o         = NcarLS_o
 					carLS_h         = NcarLS_h
+
+					local speedUnit = isMetric and "KMH" or "MPH"
+
 					SendNUIMessage({
 						ShowHud                = true,
 						CurrentCarRPM          = carRPM,
@@ -65,7 +78,8 @@ Citizen.CreateThread(function()
 						CurrentCarLS_r         = carLS_r,
 						CurrentCarLS_o         = carLS_o,
 						CurrentCarLS_h         = carLS_h,
-						PlayerID               = GetPlayerServerId(GetPlayerIndex())
+						PlayerID               = GetPlayerServerId(GetPlayerIndex()),
+						Unit                   = speedUnit  -- New line to send speed unit to the HUD
 					})
 				else
 					Wait(100)

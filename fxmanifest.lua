@@ -1,9 +1,10 @@
 fx_version 'bodacious'
 games { 'gta5' }
 
-description "Forza Horizon 4 Speedometer"
-author "Akkariin"
-url "https://www.zerodream.net/"
+name "Forza Horizon 4 Speedometer"
+description "The Forza Horizon 4 speedometer by Akkariin. Modified to have new features. Maybe assisted by artificial stuff."
+author "Akkariin, The Project Fairness Labs"
+url "https://discord.gg/D7cVc8TzPN"
 
 ui_page "html/hud.html"
 
