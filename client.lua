@@ -25,7 +25,7 @@ RegisterKeyMapping("speedometer", "Enable or disable the speedometer.", "keyboar
 
 Citizen.CreateThread(function()
 	while true do
-		Wait(50)
+		Wait(5)
 
 		playerPed = GetPlayerPed(-1)
 		
