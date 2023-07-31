@@ -25,5 +25,4 @@ files {
 	"html/fonts/Oswald-Regular.woff2",
 	"html/images/speedcircle.png",
 }
-
-client_script "client.lua"
+client_script {"SpeedOclient.lua", "config.lua"}

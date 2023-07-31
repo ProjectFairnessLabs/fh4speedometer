@@ -38,11 +38,113 @@ $(function() {
             s_LS_h         = item.CurrentCarLS_h;
             CalcSpeed      = s_Kmh;
             CalcRpm        = (s_Rpm * 9);
+            rpmlimit       = 0.87;
+            CarClass       = item.CarClass;
+            CustomRPM      = item.CustomRPM;
             
             if (CalcSpeed > 999) {
                 CalcSpeed = 999;
             }
-            
+            if (CustomRPM!=null)
+            {
+            $("#rpmshow").attr("data-major-ticks", CustomRPM);
+            $("#rpmbg").attr("data-major-ticks", CustomRPM);
+            } else if (CarClass==0) // Compacts 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==1) // Sedans 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==2) // SUVs 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==3) // Coupes 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==4) // Muscle 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==5) // SportsClassics 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==6) // Sports 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==7) // Super 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==8) // Motorcycles 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==9) // OffRoad 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==10) // Industrial 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==11) // Utility 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==12) // Vans 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==13) // Cycles 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==14) // Boats 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==15) // Helicopters 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==16) // Planes 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==17) // Service 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7");
+            } else if (CarClass==18) // Emergency
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5");
+            } else if (CarClass==19) // Military 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5");
+            } else if (CarClass==20) // Commercial 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,0.5,1,1.5,2,2.5,3,3.5,4");
+            $("#rpmbg").attr("data-major-ticks", "0,0.5,1,1.5,2,2.5,3,3.5,4");
+            } else if (CarClass==21) // Trains 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            } else if (CarClass==22) // OpenWheel 
+            {
+            $("#rpmshow").attr("data-major-ticks", "0,2,4,6,8,10,12,14,16,18,20");
+            $("#rpmbg").attr("data-major-ticks", "0,2,4,6,8,10,12,14,16,18,20");
+            } else {
+            $("#rpmshow").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");
+            $("#rpmbg").attr("data-major-ticks", "0,1,2,3,4,5,6,7,8,9");               
+            }
             // Vehicle Gear display
             if (s_Gear == 0) {
                 $(".geardisplay span").html("R");
@@ -54,16 +156,16 @@ $(function() {
                 } else {
                     $(".geardisplay").removeAttr("style");
                 }
-                if (CalcRpm >= 9) {
+                if (CalcRpm >= (9*rpmlimit)) {
                     IsOverLoad = true;
                     if (OverLoadRPM) {
-                        CalcRpm = 9;
-                        s_Rpm = 9;
+                        CalcRpm = (9*rpmlimit);
+                        s_Rpm = (9*rpmlimit);
                         OverLoadRPM = false;
                     } else {
                         var tempRandom = Math.random();
-                        CalcRpm = 8 + tempRandom;
-                        s_Rpm = 8 + tempRandom;
+                        CalcRpm = (8 + tempRandom)*rpmlimit;
+                        s_Rpm = (8 + tempRandom)*rpmlimit;
                         OverLoadRPM = true;
                     }
                 } else {
