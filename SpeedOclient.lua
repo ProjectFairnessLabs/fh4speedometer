@@ -5,7 +5,11 @@
 
 local isHide = false
 local isMetric = true  -- Default to KMH (metric) mode
-
+local reload = false
+local startreload = false
+local RefreshMulti = 1
+local rpmlimit = 0.83 
+local rpmlimitdata = 7.5 
 RegisterCommand("speedometer", function(_, args)
 	if args[1] == "unit" then
 		isMetric = not isMetric
@@ -22,10 +26,34 @@ TriggerEvent('chat:addSuggestion', '/speedometer', 'Toggle the speedometer displ
 })
 
 RegisterKeyMapping("speedometer", "Enable or disable the speedometer.", "keyboard", "f10")
-
+Citizen.CreateThread(function()
+    while true do
+        local startCount = GetFrameCount()
+        Wait(250)
+        local endCount = GetFrameCount()
+        local frameNum = (endCount - startCount)*4     
+        if frameNum <= Config.MinFramerate then
+        	RefreshMulti = (Config.MinFramerate / frameNum)
+        else
+        	RefreshMulti = 1
+        end
+    end
+end)
 Citizen.CreateThread(function()
 	while true do
-		Wait(5)
+		Wait(Config.RefreshSpeed*RefreshMulti)
+
+		if IsPauseMenuActive() then
+				SendNUIMessage({HideHud = true})
+				startreload = true
+			else
+				if startreload then
+				reload = true	
+				startreload = false
+			else
+				reload = false
+			end
+		end
 
 		playerPed = GetPlayerPed(-1)
 		
@@ -49,7 +77,7 @@ Citizen.CreateThread(function()
 					or NcarHandbrake ~= carHandbrake or NcarBrakeABS ~= carBrakeABS or NcarLS_r ~= carLS_r or NcarLS_o ~= carLS_o or NcarLS_h ~= carLS_h then
 					shouldUpdate = true
 				end
-				if shouldUpdate then
+				if shouldUpdate or reload then
 					carRPM          = NcarRPM
 					carGear         = NcarGear
 					carSpeed        = NcarSpeed
@@ -64,11 +92,23 @@ Citizen.CreateThread(function()
 					local speedUnit = isMetric and "KMH" or "MPH"
 					hash = GetEntityModel(playerCar)
 					if Config.vehicleRPM[hash] then
-						customrpm = Config.vehicleRPM[hash]
+						customrpm = Config.vehicleRPM[hash][1]
+						rpmlimit = Config.vehicleRPM[hash][2]
+						rpmlimitdata = ((0.75/0.83)*(Config.vehicleRPM[hash][2]+0.00))*10
+						scalerpm = (1/(1-Config.vehicleRPM[hash][3]))
+						carRPM = (carRPM-Config.vehicleRPM[hash][3])*scalerpm
 					else
 						customrpm = nil
-
+						rpmlimit = 0.83
+						rpmlimitdata = 7.5
+						scalerpm = (1/(1-0))
+						carRPM = (carRPM-0)*scalerpm
 					end
+					if GetEntitySpeed(playerCar) < 0.05 and not IsVehicleInBurnout(playerCar)  then
+						carGear = "N"
+					end
+	
+					if not IsPauseMenuActive() then
 					SendNUIMessage({
 						ShowHud                = true,
 						CurrentCarRPM          = carRPM,
@@ -86,8 +126,12 @@ Citizen.CreateThread(function()
 						PlayerID               = GetPlayerServerId(GetPlayerIndex()),
 						Unit                   = speedUnit,  -- New line to send speed unit to the HUD
 						CarClass			   = GetVehicleClass(playerCar),
-						CustomRPM 			   = customrpm
+						CustomRPM 			   = customrpm,
+						RPMLimit			   = rpmlimit,
+						RPMLimitData		   = rpmlimitdata
 					})
+					end
+					
 				else
 					Wait(100)
 				end

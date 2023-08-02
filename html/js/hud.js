@@ -37,11 +37,11 @@ $(function() {
             s_LS_o         = item.CurrentCarLS_o;
             s_LS_h         = item.CurrentCarLS_h;
             CalcSpeed      = s_Kmh;
-            CalcRpm        = (s_Rpm * 9);
-            rpmlimit       = 0.87;
+            CalcRpm        = (s_Rpm * item.RPMLimitData);
+            rpmlimit       = item.RPMLimit;
             CarClass       = item.CarClass;
             CustomRPM      = item.CustomRPM;
-            
+            RPMLimitData   = item.RPMLimitData;
             if (CalcSpeed > 999) {
                 CalcSpeed = 999;
             }
@@ -149,9 +149,12 @@ $(function() {
             if (s_Gear == 0) {
                 $(".geardisplay span").html("R");
                 $(".geardisplay").attr("style", "color: #FFF;border-color:#FFF;");
+            } else             if (s_Gear == "N") {
+                $(".geardisplay span").html("N");
+                $(".geardisplay").attr("style", "color: #FFF;border-color:#FFF;");
             } else {
                 $(".geardisplay span").html(s_Gear);
-                if (CalcRpm > 7.5) {
+                if (CalcRpm > RPMLimitData*0.99) {
                     $(".geardisplay").attr("style", "color: rgb(235,30,76);border-color:rgb(235,30,76);");
                 } else {
                     $(".geardisplay").removeAttr("style");
@@ -164,15 +167,18 @@ $(function() {
                         OverLoadRPM = false;
                     } else {
                         var tempRandom = Math.random();
-                        CalcRpm = (8 + tempRandom)*rpmlimit;
-                        s_Rpm = (8 + tempRandom)*rpmlimit;
+                        CalcRpm = (8.9 + (tempRandom/4))*rpmlimit;
+                        s_Rpm = (8.9 + (tempRandom/4))*rpmlimit;
                         OverLoadRPM = true;
                     }
                 } else {
                     IsOverLoad = false;
                 }
             }
-            
+            // Vehicle RPM Redline
+            $("#rpmshow").attr("data-highlights", ('[{"from": 7.5, "to": 9, "color": "rgba(242,83,108,0.9)"}]').replace("7.5", RPMLimitData));
+            $("#rpmbg").attr("data-highlights", ('[{"from": 7.5, "to": 9, "color": "rgba(242,83,108,0.9)"}]').replace("7.5", RPMLimitData)); 
+
             // Vehicle RPM display
             $("#rpmshow").attr("data-value", CalcRpm.toFixed(2));
             
@@ -215,10 +221,10 @@ $(function() {
             
             // Display speed and container
             $(".speeddisplay").html(speedText);
-            $("#container").fadeIn(500);
+            $("#container").fadeIn(250);
         } else if (item.HideHud) {
             // Hide GUI
-            $("#container").fadeOut(500);
+            $("#container").fadeOut(250);
             inVehicle = false;
         }
     });
