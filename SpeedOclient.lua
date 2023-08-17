@@ -10,6 +10,13 @@ local startreload = false
 local RefreshMulti = 1
 local rpmlimit = 0.83 
 local rpmlimitdata = 7.5 
+
+
+AddEventHandler("FH4:FH4SpeedOMeter", function(cb)
+    cb(Config.pf_vmenu_intergration)
+end)
+
+
 RegisterCommand("speedometer", function(_, args)
 	if args[1] == "unit" then
 		isMetric = not isMetric
@@ -20,6 +27,9 @@ RegisterCommand("speedometer", function(_, args)
 		ToggleDisplay()
 	end
 end, false)
+
+
+
 
 TriggerEvent('chat:addSuggestion', '/speedometer', 'Toggle the speedometer display.', {
     { name="unit", help="Switch speedometer units between KMH and MPH." }
