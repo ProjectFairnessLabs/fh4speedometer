@@ -66,6 +66,9 @@ Citizen.CreateThread(function()
 		end
 
 		playerPed = GetPlayerPed(-1)
+		ResetHudComponentValues(6)
+		ResetHudComponentValues(7)
+		ResetHudComponentValues(9)
 		
 		if playerPed and IsPedInAnyVehicle(playerPed) and not isHide then
 			
@@ -80,6 +83,10 @@ Citizen.CreateThread(function()
 				local NcarHandbrake                = GetVehicleHandbrake(playerCar)
 				local NcarBrakeABS                 = (GetVehicleWheelSpeed(playerCar, 0) <= 0.0) and (NcarSpeed > 0.0)
 				local NcarLS_r, NcarLS_o, NcarLS_h = GetVehicleLightsState(playerCar)
+				-- Move the damn HUD so it doesn't intefere with the speedo when it is active. God damn.
+				SetHudComponentPosition(6, -0.14, -0.06)
+				SetHudComponentPosition(7, -0.14, -0.022)
+				SetHudComponentPosition(9, -0.14, 0.0154)
 				
 				local shouldUpdate = false
 				
