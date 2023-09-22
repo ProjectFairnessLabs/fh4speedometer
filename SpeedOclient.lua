@@ -56,15 +56,16 @@ Citizen.CreateThread(function()
 		end
 
 		playerPed = GetPlayerPed(-1)
-		ResetHudComponentValues(6)
-		ResetHudComponentValues(7)
-		ResetHudComponentValues(9)
 		
 		if playerPed and IsPedInAnyVehicle(playerPed) and not isHide then
 			
 			playerCar = GetVehiclePedIsIn(playerPed, false)
 			
 			if playerCar and GetPedInVehicleSeat(playerCar, -1) == playerPed then
+				-- Move the damn HUD so it doesn't intefere with the speedo when it is active. Took me a while to get a hold of this.
+				SetHudComponentPosition(6, -0.14, -0.06)
+				SetHudComponentPosition(7, -0.14, -0.022)
+				SetHudComponentPosition(9, -0.14, 0.0154)
 				local NcarRPM                      = GetVehicleCurrentRpm(playerCar)
 				local NcarSpeed                    = GetEntitySpeed(playerCar)
 				local NcarGear                     = GetVehicleCurrentGear(playerCar)
@@ -73,10 +74,6 @@ Citizen.CreateThread(function()
 				local NcarHandbrake                = GetVehicleHandbrake(playerCar)
 				local NcarBrakeABS                 = (GetVehicleWheelSpeed(playerCar, 0) <= 0.0) and (NcarSpeed > 0.0)
 				local NcarLS_r, NcarLS_o, NcarLS_h = GetVehicleLightsState(playerCar)
-				-- Move the damn HUD so it doesn't intefere with the speedo when it is active. Took me a while to get a hold of this.
-				SetHudComponentPosition(6, -0.14, -0.06)
-				SetHudComponentPosition(7, -0.14, -0.022)
-				SetHudComponentPosition(9, -0.14, 0.0154)
 				
 				local shouldUpdate = false
 				
@@ -157,6 +154,9 @@ function ToggleDisplay()
 		isHide = false
 	else
 		SendNUIMessage({HideHud = true})
+		ResetHudComponentValues(6)
+		ResetHudComponentValues(7)
+		ResetHudComponentValues(9)
 		isHide = true
 	end
 end
